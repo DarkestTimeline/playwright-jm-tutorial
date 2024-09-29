@@ -3,9 +3,16 @@ import { kMaxLength } from 'buffer';
 import exp from 'constants';
 import { loginPage } from './pageobjects/loginpage';
 
+// Run test without using Auth Setup
+//test.use({storageState: {cookies:[], origins:[]}});
+
 test('purchase an item', async({page}, testInfo) => {
     // Open page
+    // We go directly to the inventory page, using auth setup don't need login
+    await page.goto('https://www.saucedemo.com/inventory.html');
+    /* Removed all login calls, using auth setup 
     await page.goto('https://www.saucedemo.com');
+    */
 
     //Login
     /*
@@ -23,20 +30,28 @@ test('purchase an item', async({page}, testInfo) => {
     */
     
     //Call loginpage.ts single method
+    /* Removed all login calls, using auth setup 
     const loginpage =  new loginPage(page);
     await loginpage.loginWithCredentials('standard_user', 'secret_sauce');
+    */
     //Take screenhots
     //Method #1
     //await page.screenshot({path: 'screenshots/login.png', fullPage: true})
     //Method #2
+    /*
     await testInfo.attach('login', {
         body: await page.screenshot(),
         contentType: 'image/png'
     })
+    */
 
     //Check that login was succesful
+    /* Removed all login calls, using auth setup 
     await loginpage.checkSuccessfulLogin();
+    */
 
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
     //Set const with all items container
     const itemsContainer = await page.locator('#inventory_container .inventory_item').all();
     //Set const with random item from container
